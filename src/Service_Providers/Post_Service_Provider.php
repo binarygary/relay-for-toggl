@@ -4,6 +4,7 @@ namespace Gary\Relay\Service_Providers;
 
 use Gary\Relay\Guzzle\Requester;
 use Gary\Relay\Toggl\{Clients,Projects,Tags,Time_Entries};
+use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
 class Post_Service_Provider implements ServiceProviderInterface {
@@ -17,11 +18,11 @@ class Post_Service_Provider implements ServiceProviderInterface {
 			return new Clients( $container );
 		};
 
-		if ( ! isset( $_GET['request'] ) ) {
+		if ( ! isset( $_POST['request'] ) ) {
 			return;
 		}
 
-		switch ( $_GET['request']) {
+		switch ( $_POST['request']) {
 			case 'client' :
 				$container['toggl.client']->register();
 		}
