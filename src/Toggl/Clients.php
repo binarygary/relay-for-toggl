@@ -2,9 +2,10 @@
 
 namespace Gary\Relay\Toggl;
 
-class Clients {
+class Clients extends Request {
 
-	public function register() {
-		echo 'thingks';
+	public function request( ) {
+
 	}
+
 }

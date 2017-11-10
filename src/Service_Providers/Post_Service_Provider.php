@@ -4,8 +4,7 @@ namespace Gary\Relay\Service_Providers;
 
 use Gary\Relay\Guzzle\Requester;
 use Gary\Relay\Toggl\{Clients,Projects,Tags,Time_Entries};
-use Pimple\Container;
-use Pimple\ServiceProviderInterface;
+use Pimple\{Container,ServiceProviderInterface};
 
 class Post_Service_Provider implements ServiceProviderInterface {
 
@@ -14,25 +13,39 @@ class Post_Service_Provider implements ServiceProviderInterface {
 			return new Requester();
 		};
 
-		$container['toggl.client'] = function() use ( $container ) {
+		$container['toggl.clients'] = function() use ( $container ) {
 			return new Clients( $container );
+		};
+
+		$container['toggl.projects'] = function() use ( $container ) {
+			return new Projects( $container );
+		};
+
+		$container['toggl.tags'] = function() use ( $container ) {
+			return new Tags( $container );
+		};
+
+		$container['toggl.time_entries'] = function() use ( $container ) {
+			return new Time_Entries( $container );
 		};
 
 		if ( ! isset( $_POST['request'] ) ) {
 			return;
 		}
 
-		switch ( $_POST['request']) {
+		switch ( (string)$_POST['request']) {
 			case 'client' :
-				$container['toggl.client']->register();
+				$container['toggl.clients']->retrieve();
+				break;
+			case 'project' :
+				$container['toggl.projects']->retrieve();
+				break;
+			case 'tag' :
+				$container['toggl.tags']->retrieve();
+				break;
+			case 'time' :
+				$container['toggl.time_entries']->init();
+				break;
 		}
-
-		add_action( 'admin_menu', function () use ( $container ) {
-			$container['options.importsettings']->add_settings_page();
-		} );
-		add_action( 'admin_init', function () use ( $container ) {
-			$container['options.importsettings']->initialize_options();
-		} );
 	}
-
 }
