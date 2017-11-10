@@ -5,8 +5,11 @@ namespace Gary\Relay;
 use Pimple;
 
 class Core {
-	public function __construct() {
-		echo 'hi';
+
+	protected $container = null;
+
+	public function __construct( $container ) {
+		$this->container = $container;
 	}
 
 	static public function instance( Pimple\Container $container ) {
@@ -15,6 +18,6 @@ class Core {
 	}
 
 	public function init() {
-		echo 'taco';
+		echo 'yes';
 	}
 }
