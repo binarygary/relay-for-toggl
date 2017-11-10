@@ -11,5 +11,12 @@
             "name": "Gary Kovar",
             "email": "gkovar@gmail.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Gary\\Relay\\": "src/"
+        },
+        "files": [
+        ]
+    }
 }
