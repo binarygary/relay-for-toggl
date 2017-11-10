@@ -2,6 +2,7 @@
 
 namespace Gary\Relay;
 
+use Gary\Relay\Service_Providers\Post_Service_Provider;
 use Pimple;
 
 class Core {
@@ -18,6 +19,10 @@ class Core {
 	}
 
 	public function init() {
-		echo 'yes';
+		$this->service_providers();
+	}
+
+	public function service_providers() {
+		$this->container->register( new Post_Service_Provider() );
 	}
 }
