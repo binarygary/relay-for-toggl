@@ -2,7 +2,7 @@
 
 namespace Gary\Relay;
 
-use Gary\Relay\Service_Providers\Post_Service_Provider;
+use Gary\Relay\Service_Providers\Proxy_Service_Provider;
 use Pimple;
 
 class Core {
@@ -23,6 +23,6 @@ class Core {
 	}
 
 	public function service_providers() {
-		$this->container->register( new Post_Service_Provider() );
+		$this->container->register( new Proxy_Service_Provider() );
 	}
 }

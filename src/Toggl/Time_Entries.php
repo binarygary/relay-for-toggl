@@ -6,7 +6,7 @@ class Time_Entries extends Request {
 
 	const ENDPOINT = 'https://www.toggl.com/api/v8/time_entries/';
 
-	public function init() {
+	public function request() {
 		switch ( (string) $_POST['action'] ) {
 			case 'start':
 				$this->start_clock();
@@ -18,22 +18,38 @@ class Time_Entries extends Request {
 	}
 
 	private function start_clock() {
+		if ( $this->get_running_id() > 0 ) {
+
+		}
 		$request = [
 			'time_entry' => [
 				'description'  => 'testing',
 				'created_with' => 'toggl_relay',
 			],
 		];
-		print_r( $this->make_request( 'POST', 'start', $request ) );
+
+		$response = $this->make_request( 'POST', self::ENDPOINT . 'start', $request );
 	}
 
-	private function stop_clock() {
-		$running = json_decode( $this->make_request( 'GET', 'current' )->getBody(), true );
-		print_r( $this->make_request( 'PUT', $running['data']['id'] . '/stop' ) );
+	private function stop_clock( $running_id = 0 ) {
+		if ( 0 === $running_id ) {
+			$running_id = $this->get_running_id();
+		}
+		$this->stop_clock_call( $running_id );
 	}
 
-	private function make_request( $action, $endpoint, $request = [] ) {
-		return $this->container['guzzle.requester']->make_request( $action, self::ENDPOINT . $endpoint, $request );
+	private function stop_clock_call( $running_id ) {
+		$this->make_request( 'PUT', self::ENDPOINT . $running_id . '/stop' );
+	}
+
+	private function get_running_id() {
+		$running = $this->make_request( 'GET', self::ENDPOINT . 'current' );
+
+		if ( ! isset( $running->data->id ) ) {
+			return 0;
+		}
+
+		return $running->data->id;
 	}
 
 }

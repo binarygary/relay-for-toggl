@@ -3,6 +3,7 @@
 namespace Gary\Relay\Guzzle;
 
 use GuzzleHttp\Client;
+use Pimple\Container;
 
 class Requester extends Client {
 
@@ -21,12 +22,17 @@ class Requester extends Client {
 	}
 
 	private function build_request( $request ) {
+
 		$request_array = [
 			'auth' => [
 				$this->api_key,
 				'api_token',
 			],
 		];
+
+		if ( empty( $request ) ) {
+			return $request_array;
+		}
 
 		if ( count( $request ) ) {
 			$request_array['json'] = $request;
