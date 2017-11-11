@@ -57,10 +57,10 @@ class Time_Entries extends Request {
 
 	private function is_running() {
 		if ( $this->get_running_id() ) {
-			echo true;
+			echo json_encode( true );
 		}
 
-		echo false;
+		echo json_decode( false );
 	}
 
 }
