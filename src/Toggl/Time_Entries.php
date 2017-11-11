@@ -14,6 +14,9 @@ class Time_Entries extends Request {
 			case 'stop':
 				$this->stop_clock();
 				break;
+			case 'is_running' :
+				$this->is_running();
+				break;
 		}
 	}
 
@@ -50,6 +53,14 @@ class Time_Entries extends Request {
 		}
 
 		return $running->data->id;
+	}
+
+	private function is_running() {
+		if ( $this->get_running_id() ) {
+			echo true;
+		}
+
+		echo false;
 	}
 
 }
