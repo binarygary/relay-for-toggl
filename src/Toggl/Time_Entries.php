@@ -56,7 +56,7 @@ class Time_Entries extends Request {
 	}
 
 	private function is_running() {
-		echo $this->get_running_id();
+		echo json_encode( $this->get_running_id() );
 	}
 
 }
