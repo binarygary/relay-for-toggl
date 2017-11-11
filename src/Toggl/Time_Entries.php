@@ -26,7 +26,7 @@ class Time_Entries extends Request {
 		}
 		$request = [
 			'time_entry' => [
-				'description'  => 'testing',
+				'description'  => $_POST['description'],
 				'created_with' => 'toggl_relay',
 			],
 		];

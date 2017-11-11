@@ -4,6 +4,8 @@ namespace Gary\Relay\Toggl;
 
 class Projects extends Request {
 
+	const ENDPOINT = 'https://www.toggl.com/api/v8/projects';
+
 	public function request( ) {
 		switch ( (string) $_POST['action'] ) {
 			case 'list':
@@ -16,7 +18,7 @@ class Projects extends Request {
 	}
 
 	private function project_list() {
-		$wid = $this->container['toggl.workspaces']->get_projects();
+		$wid = $this->container['toggl.workspaces']->get_wid();
 		$endpoint = "https://www.toggl.com/api/v8/workspaces/{$wid}/projects";
 
 		$projects = $this->make_request( 'GET', $endpoint );
@@ -30,9 +32,25 @@ class Projects extends Request {
 	}
 
 	private function setup() {
-		foreach ( $this->project_list() as $id => $name ) {
+		$projects = json_decode( $_POST['projects'] );
+		$toggl_projects = $this->project_list();
 
+		foreach ( array_filter( $projects ) as $project ) {
+			if ( ! in_array ( $project, $toggl_projects ) ) {
+				$this->create_project( $project );
+			}
 		}
+	}
+
+	private function create_project( $project ) {
+		$project = [
+			'project' => [
+				'name' => $project,
+				'wid' => $this->container['toggl.workspaces']->get_wid(),
+			]
+		];
+
+		$this->make_request( 'POST', self::ENDPOINT, $project );
 	}
 
 }

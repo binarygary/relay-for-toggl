@@ -9,5 +9,4 @@ class Central extends Redmine\Client {
 	public function __construct( $url, $apikeyOrUsername, $pass = null ) {
 		parent::__construct( $url, $apikeyOrUsername, $pass );
 	}
-
 }
