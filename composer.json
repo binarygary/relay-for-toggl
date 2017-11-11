@@ -4,7 +4,8 @@
     "type": "library",
     "require": {
         "guzzlehttp/guzzle": "^6.3",
-        "pimple/pimple": "^3.2"
+        "pimple/pimple": "^3.2",
+        "kbsali/redmine-api": "~1.0"
     },
     "authors": [
         {
