@@ -28,6 +28,7 @@ class Time_Entries extends Request {
 			'time_entry' => [
 				'description'  => $_POST['description'],
 				'created_with' => 'toggl_relay',
+				'pid' => $_POST['pid'],
 			],
 		];
 
