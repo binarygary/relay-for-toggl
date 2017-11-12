@@ -38,7 +38,7 @@ class Projects extends Request {
 		$toggl_projects = $this->project_list();
 
 		if ( ! in_array ( $_POST['project_name'], $toggl_projects ) ) {
-				$this->create_project( $project );
+				$this->create_project( $_POST['project_name'] );
 		}
 
 		echo json_encode( $this->current_project_id() );
