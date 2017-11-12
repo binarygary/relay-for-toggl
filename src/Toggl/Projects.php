@@ -12,7 +12,7 @@ class Projects extends Request {
 				$this->project_list();
 				break;
 			case 'setup':
-				$this->current_project_id();
+				$this->setup();
 				break;
 			case 'current':
 				$this->current_project_id();
@@ -34,18 +34,17 @@ class Projects extends Request {
 		return $project_ids;
 	}
 
-	private function setup( $project ) {
+	private function setup() {
 		$toggl_projects = $this->project_list();
 
-		if ( ! in_array ( $project, $toggl_projects ) ) {
+		if ( ! in_array ( $_POST['project_name'], $toggl_projects ) ) {
 				$this->create_project( $project );
 		}
 
-		//echo json_encode( $this->current_project_id() );
+		echo json_encode( $this->current_project_id() );
 	}
 
 	private function current_project_id() {
-		$this->setup( $_POST['project_name'] );return;
 		return array_search( $_POST['project_name'], $this->project_list() );
 	}
 
