@@ -34,20 +34,18 @@ class Projects extends Request {
 		return $project_ids;
 	}
 
-	private function setup() {
-		$projects = json_decode( $_POST['projects'] );
+	private function setup( $project ) {
 		$toggl_projects = $this->project_list();
 
-		foreach ( array_filter( $projects ) as $project ) {
-			if ( ! in_array ( $project, $toggl_projects ) ) {
+		if ( ! in_array ( $project, $toggl_projects ) ) {
 				$this->create_project( $project );
-			}
 		}
 
 		echo json_encode( $this->current_project_id() );
 	}
 
 	private function current_project_id() {
+		$this->setup( $_POST['project_name'] );return;
 		return array_search( $_POST['project_name'], $this->project_list() );
 	}
 
