@@ -12,7 +12,7 @@ class Projects extends Request {
 				$this->project_list();
 				break;
 			case 'setup':
-				$this->setup();
+				$this->current_project_id();
 				break;
 			case 'current':
 				$this->current_project_id();
@@ -41,7 +41,7 @@ class Projects extends Request {
 				$this->create_project( $project );
 		}
 
-		echo json_encode( $this->current_project_id() );
+		//echo json_encode( $this->current_project_id() );
 	}
 
 	private function current_project_id() {
