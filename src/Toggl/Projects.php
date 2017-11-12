@@ -14,6 +14,9 @@ class Projects extends Request {
 			case 'setup':
 				$this->setup();
 				break;
+			case 'current':
+				$this->current_project_id();
+				break;
 		}
 	}
 
@@ -40,6 +43,12 @@ class Projects extends Request {
 				$this->create_project( $project );
 			}
 		}
+
+		echo json_encode( $this->current_project_id() );
+	}
+
+	private function current_project_id() {
+		return array_search( $_POST['project_name'], $this->project_list() );
 	}
 
 	private function create_project( $project ) {
